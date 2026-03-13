@@ -3,22 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes - Missao 2100</title>
+    <title>Missão Tech 2100 | O Dilema da IA</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Quicksand:wght@400;600&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        #simulador-tech {
+            text-align: center;
+            margin: 30px 0; padding: 20px;
+            background-color: #000; border: 4px solid #ff0000;
+            color: #ff0000; box-shadow: 8px 8px 0px #550000;
+        }
+
+        /* Estilo dos Medidores Sociais */
+        .status-social {
+            margin: 15px 0;
+            text-align: left;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.55rem;
+        }
+        .barra-bg {
+            width: 100%; height: 15px;
+            background: #222; border: 2px solid #ff0000; margin-top: 5px;
+        }
+        .barra-fill {
+            height: 100%; width: 100%;
+            background: #00ff00; transition: width 0.4s, background 0.4s;
+        }
+
+        #servidor-container { font-size: 70px; margin: 30px 0; height: 120px; }
+        #slider-ia { width: 90%; cursor: pointer; accent-color: #ff0000; }
+        #display-ano { font-family: 'Press Start 2P', cursive; font-size: 1.5rem; }
+
+        #log-sistema {
+            background: #000; color: #ff0000;
+            font-family: monospace; padding: 10px;
+            text-align: left; height: 120px;
+            border: 1px solid #ff0000; margin-top: 15px; font-size: 0.75rem;
+        }
+
+        .distopia-info { background: #1a1a1a; padding: 20px; border-left: 5px solid #ff0000; margin: 20px 0; }
+    </style>
 </head>
-<body>
-    <header>
+<body id="pagina-tech" style="background-color: #0a0a0a; color: #eee;">
+
+    <header style="background-color: #440000;">
         <div class="container">
-            <h1>Relatorio de Missao</h1>
+            <span class="material-symbols-rounded" style="color: white !important;">psychology</span>
+            <h1>A Erosão da Mente</h1>
+            <p>Em 2100, quem realmente estará no comando?</p>
         </div>
     </header>
+
     <main class="container">
-        <section class="card">
-            <h2>Dados de 2100</h2>
-            <p>Conteudo sobre o tema aqui...</p>
-            <a href="index.html" class="btn">Voltar ao Menu</a>
+        <section class="conteudo-detalhado">
+            <h2>IA Indevida: O Fim do Pensar?</h2>
+            <p>Se usarmos a IA apenas como um atalho para tudo, corremos o risco de "atrofiar" nossa inteligência como sociedade. Em 2100, o perigo não é apenas o calor físico, mas a perda da nossa capacidade crítica de agir contra ele.</p>
         </section>
+
+        <section id="simulador-tech">
+            <label>ANO: <span id="display-ano">2026</span></label><br>
+            <input type="range" id="slider-ia" min="2026" max="2100" value="2026" oninput="atualizarIA()">
+
+            <div id="servidor-container">
+                <div id="avatar-social">👥</div>
+            </div>
+
+            <div class="status-social">
+                AUTONOMIA HUMANA: <span id="val-autonomia">100%</span>
+                <div class="barra-bg"><div id="bar-autonomia" class="barra-fill"></div></div>
+            </div>
+
+            <div class="status-social">
+                PENSAMENTO CRÍTICO: <span id="val-critico">100%</span>
+                <div class="barra-bg"><div id="bar-critico" class="barra-fill"></div></div>
+            </div>
+
+            <div id="log-sistema">> Aguardando interação...</div>
+        </section>
+
+        <section class="distopia-info">
+            <h3>A Linha do Tempo do Retrocesso</h3>
+            <p><strong>2040:</strong> Algoritmos decidem o que você estuda e consome.</p>
+            <p><strong>2070:</strong> Fake News climáticas geradas por IA impedem governos de agir.</p>
+            <p><strong>2100:</strong> A dependência é total. Sem a IA, a sociedade não sabe mais como plantar ou filtrar água.</p>
+        </section>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="btn" style="background: #440000;">Retornar à Base</a>
+        </div>
     </main>
+
+    <script>
+        function atualizarIA() {
+            const ano = parseInt(document.getElementById('slider-ia').value);
+            const avatar = document.getElementById('avatar-social');
+            const log = document.getElementById('log-sistema');
+            const bAutonomia = document.getElementById('bar-autonomia');
+            const bCritico = document.getElementById('bar-critico');
+            const vAutonomia = document.getElementById('val-autonomia');
+            const vCritico = document.getElementById('val-critico');
+            
+            document.getElementById('display-ano').innerText = ano;
+            const progresso = (ano - 2026) / (2100 - 2026);
+
+            // Cálculos Sociais (Queda progressiva)
+            const autonomia = Math.max(5, Math.round(100 - (progresso * 95)));
+            const critico = Math.max(2, Math.round(100 - (progresso * 98)));
+
+            // Atualiza Barras e Valores
+            bAutonomia.style.width = autonomia + "%";
+            bCritico.style.width = critico + "%";
+            vAutonomia.innerText = autonomia + "%";
+            vCritico.innerText = critico + "%";
+
+            // Cores das Barras
+            const cor = autonomia > 60 ? "#00ff00" : (autonomia > 30 ? "#e67e22" : "#ff0000");
+            bAutonomia.style.background = cor;
+            bCritico.style.background = cor;
+
+            // Narrativa do Log e Avatar
+            if (ano < 2045) {
+                avatar.innerText = "👥";
+                log.innerHTML = "> Sociedade colaborativa.<br>> IA auxilia na ciência climática.";
+            } else if (ano < 2080) {
+                avatar.innerText = "📱";
+                log.innerHTML = "> Vício algorítmico detectado.<br>> Polarização social impede metas do ODS 13.";
+            } else {
+                avatar.innerText = "⛓️";
+                log.innerHTML = "> 2100: Intelecto humano terceirizado.<br>> ALERTA: Sociedade incapaz de reparo manual.";
+                avatar.style.transform = `scale(${0.8 + Math.random() * 0.4})`;
+            }
+        }
+        atualizarIA();
+    </script>
 </body>
 </html>
